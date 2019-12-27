@@ -21,8 +21,13 @@ internal struct RGBColor: Hashable, Equatable {
 		self.green = green
 		self.blue = blue
 		self.alpha = alpha
+
         let maxInt = Int64(Int32.max)
-		self.hashValue = Int(((alpha << 24) | (red << 16) | (green << 8) | blue) % maxInt)
+        let shiftedAlpha = alpha << 24
+        let shiftedRed = red << 16
+        let shiftedGreen = green << 8
+        let shiftedBlue = blue
+		self.hashValue = Int((shiftedAlpha | shiftedRed | shiftedGreen | shiftedBlue) % maxInt)
 	}
 
 	init(color: UIColor) {
@@ -35,6 +40,10 @@ internal struct RGBColor: Hashable, Equatable {
 
 		self.init(red: Int64(round(red * 255.0)), green: Int64(round(green * 255.0)), blue: Int64(round(blue * 255.0)), alpha: Int64(round(alpha * 255.0)))
 	}
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(hashValue)
+    }
 
 	var color: UIColor {
 		return UIColor(red: CGFloat(self.red) / 255.0, green: CGFloat(self.green) / 255.0, blue: CGFloat(self.blue) / 255.0, alpha: CGFloat(self.alpha) / 255.0)

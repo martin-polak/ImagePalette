@@ -237,6 +237,10 @@ private class Vbox: Hashable {
 		self.fitBox()
 	}
 
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(hashValue)
+    }
+
 	var volume: Int64 {
 		let red = Double((self.maxRed - self.minRed) + 1)
 		let green = Double((self.maxGreen - self.minGreen) + 1)

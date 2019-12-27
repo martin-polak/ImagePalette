@@ -32,7 +32,7 @@ struct AlbumLoader {
 				return mainCompletion(nil)
 			}
 
-			guard let entries = (json?["feed"] as? JsonObject)?["entry"] as? [JsonObject], entries.count > 0 else {
+			guard let entries = (json["feed"] as? JsonObject)?["entry"] as? [JsonObject], entries.count > 0 else {
 				print("Failed to detect albums")
 				return mainCompletion(nil)
 			}
